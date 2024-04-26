@@ -15,4 +15,6 @@ def convert_to_integer(input_list: list) -> list:
   return output_list
 
 def test_convert_to_integer():
-  assert convert_to_integer([1,2,3,4])
+    assert convert_to_integer([1, 2, 3, 4]) == [1, 2, 3, 4]
+
+test_convert_to_integer()
