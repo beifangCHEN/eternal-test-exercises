@@ -13,3 +13,6 @@ def convert_to_integer(input_list: list) -> list:
       continue
     output_list.append(v)
   return output_list
+
+def test_convert_to_integer():
+  assert convert_to_integer([1,2,3,4])
