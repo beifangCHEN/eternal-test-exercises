@@ -1,3 +1,5 @@
+import pytest
+
 def convert_to_integer(input_list: list) -> list:
   """Cette fonction parcourt la liste donnée en entrée et
   convertit tous les éléments qui peuvent l'être en entiers.
@@ -15,6 +17,6 @@ def convert_to_integer(input_list: list) -> list:
   return output_list
 
 def test_convert_to_integer():
-    assert convert_to_integer([1, 2, 3, 4]) == [1, 2, 3, 4]
-
-test_convert_to_integer()
+  assert convert_to_integer([0, 1]) == [0, 1]
+  assert convert_to_integer('0123') == [0, 1, 2, 3]
+  assert convert_to_integer(['a']) == []
