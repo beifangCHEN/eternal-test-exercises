@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.10, pytest-8.2.0, pluggy-1.5.0
+rootdir: /iutv/Mes_Montages/11925670/S4/test/basic-tdd/eternal-test-exercises/exercice-5
+collected 4 items
+
+test_maths.py ....                                                       [100%]
+
+============================== 4 passed in 0.04s ===============================
