@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.10, pytest-8.2.0, pluggy-1.5.0
+rootdir: /iutv/Mes_Montages/11925670/S4/test/basic-tdd/eternal-test-exercises/exercice-3
+collected 1 item
+
+test_selenium.py F                                                       [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_counter_website _____________________________
+
+    def test_counter_website():
+      ws_util.start_webserver()
+      try:
+        driver = webdriver.Firefox()
+        driver.get(f"{BASE_URL}/test.html")
+        sleep(2)
+        counterButton = driver.find_element(By.XPATH, "//*[text()='Click me!']")
+        resetButton = driver.find_element(By.XPATH, "//*[text()='Reset!']")
+        counterText = driver.find_element(By.ID, 'counter')
+        historiqueText = driver.find_element(By.ID, 'historique')
+        for i in range(0, 10):
+          counterButton.click()
+          assert counterText.text == str(i + 1)
+          sleep(0.1)
+        assert counterText.text == "10"
+        resetButton.click()
+        # le texte du compteur doit être de nouveau 0
+        assert counterText.text == "0"
+        # l'historique doit avoir la valeur 10 à sa fin
+>       assert historiqueText.text.endswith(" 10")
+E       assert False
+E        +  where False = <built-in method endswith of str object at 0x7fb30b415ef0>(' 10')
+E        +    where <built-in method endswith of str object at 0x7fb30b415ef0> = '{} - 0'.endswith
+E        +      where '{} - 0' = <selenium.webdriver.remote.webelement.WebElement (session="d7a1e201-f96e-40b9-aeed-5dfcca446479", element="9d261fe0-c630-4e27-b542-e8d93f72022f")>.text
+
+test_selenium.py:33: AssertionError
+----------------------------- Captured stderr call -----------------------------
+127.0.0.1 - - [06/May/2024 14:03:59] "GET /test.html HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2024 14:03:59] code 404, message File not found
+127.0.0.1 - - [06/May/2024 14:03:59] "GET /favicon.ico HTTP/1.1" 404 -
+=========================== short test summary info ============================
+FAILED test_selenium.py::test_counter_website - assert False
+============================== 1 failed in 12.18s ==============================
