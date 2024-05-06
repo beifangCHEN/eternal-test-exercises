@@ -119,11 +119,30 @@ toki_pona_pu_vocabulary = [
 ]
 
 
-def is_valid_toki_pona_text(s: str):
-    raise NotImplementedError()
-
-
 def is_valid_toki_pona_word(s: str):
+    valid_vowels = 'aeiou'
+    valid_consonants = 'jklmnpstw'
+    valid_characters = f'{valid_vowels}{valid_consonants}'
+    forbidden_sequences = ('wu', 'wo', 'ti', 'ji')   
+    if not all(a in valid_characters for a in s):
+        print('w: forbidden characters', s)
+        return False
+    if any(f in s.lower() for f in forbidden_sequences):
+        print('w: forbidden sequence', s)
+        return False
+    prev_letter = None
+    for letter in s:
+        if prev_letter is not None and prev_letter in valid_consonants and letter in valid_consonants and prev_letter != 'n' and letter != 'n':
+            print('w: consonant cluster, forbidden', s)
+            return False
+        if prev_letter == letter == 'n':
+            print('w: doubled n, forbidden too', s)
+            return False
+        prev_letter = letter
+    return True
+
+
+def is_valid_toki_pona_text(s: str):
     """Le Toki Pona est une langue construite extrêmement simple, faite pour
      être prononçable par quiconque et ne pas avoir de pièges.
 
@@ -157,12 +176,42 @@ def is_valid_toki_pona_word(s: str):
 
      http://lvogel.free.fr/tokipona/lecons.html
     """
-    raise NotImplementedError()
-
+    tokens = s.split()
+    valid_vowels = 'aeiou'
+    valid_consonants = 'jklmnpstw'
+    valid_characters = f'{valid_vowels}{valid_consonants} \n'
+    forbidden_sequences = ('wu', 'wo', 'ti', 'ji')
+    if not all(a in valid_characters for w in tokens for a in w.lower()):
+        print('forbidden characters')
+        return False
+    if any(f in w.lower() for f in forbidden_sequences for w in tokens):
+        print('forbidden sequence')
+        return False
+    
+    prev_word = None
+    for word in tokens:
+        prev_l = None
+        for letter in word:
+            if prev_l is not None and letter.lower() == prev_l.lower():
+                print("doubled letter, forbidden")
+                return False
+            elif prev_l is not None and prev_l.lower() in valid_consonants and prev_l != 'n' and letter in valid_consonants and letter != 'n':
+                print("invalid consonant sequence", prev_l, letter)
+                return False
+            prev_l = letter
+        if prev_word != 'jan' and word[0].upper() == word[0]:
+            print("Uppercase character without jan before, it's invalid")
+            return False
+        prev_word = word
+    return True
 
 def is_valid_toki_pona_name(s: str):
     """Vérifie qu'un nom en toki pona est valide"""
     split_words = s.split(" ")
+    assert len(split_words) == 2
+    assert split_words[0] == 'jan'
+    assert split_words[1] == split_words[1].capitalize()
+    assert is_valid_toki_pona_word(split_words[1].lower())
     return (
         len(split_words) == 2
         and split_words[0] == "jan"
@@ -209,5 +258,4 @@ mi wile e tenpo tan wile mi pona"""
 
 def test_toki_pona_name():
     assert is_valid_toki_pona_name("jan Mataka")
-    assert not is_valid_toki_pona_name("jan Mataka")
     assert is_valid_toki_pona_name("jan Kijetesantakalu")  # veut dire jan Raton-Laveur

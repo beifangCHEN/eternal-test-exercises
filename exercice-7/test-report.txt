@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.10, pytest-8.2.0, pluggy-1.5.0
+rootdir: /iutv/Mes_Montages/11925670/S4/test/basic-tdd/eternal-test-exercises/exercice-7
+collected 3 items
+
+test_toki_pona.py ...                                                    [100%]
+
+============================== 3 passed in 0.03s ===============================
