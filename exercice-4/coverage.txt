@@ -1,0 +1,1 @@
+Couldn't use data file '/iutv/Mes_Montages/11925670/S4/test/basic-tdd/eternal-test-exercises/exercice-4/.coverage': database is locked

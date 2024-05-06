@@ -2,7 +2,7 @@ import art
 
 
 def number2anybase(num: int, base: int) -> tuple[int]:
-    """Tester cette fonction et décrire ses paramètres"""
+    """convertit un nombre en une base quelconque"""
     digits = []
     while num:
         digits.append(num % base)
@@ -11,7 +11,8 @@ def number2anybase(num: int, base: int) -> tuple[int]:
 
 
 class NumberDisplay:
-    """Tester cette classe et documenter ce qu'elle fait"""
+    """Cette classe affiche des nombres dans un alphabet donné sous la forme
+    d'un afficheur numérique"""
     TYPE_NUMBERS = {
         "16": "0123456789ABCDEF",
         "10": "0123456789",
@@ -32,3 +33,15 @@ class NumberDisplay:
         art.tprint(to_show)
 
 
+def test_number2anybase():
+    assert list(number2anybase(1023, 16)) == [3, 15, 15]  # 0x3ff
+    assert list(number2anybase(15, 2)) == [1, 1, 1, 1]
+
+
+def test_numberdisplay():
+    n = NumberDisplay(4, "10")
+    n.show_number("4", 10)
+    n = NumberDisplay(4, "16")
+    n.show_number("1023", 10)
+    n = NumberDisplay(5, "secret")
+    n.show_number("1337", 10)
